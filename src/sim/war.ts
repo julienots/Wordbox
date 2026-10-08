@@ -432,7 +432,7 @@ export function endWar(w: World, war: War, outcome: 'att' | 'def' | 'white'): vo
     const r = w.relation(a, d);
     r.war = -1;
     r.truceUntil = w.tick + 120 * 10;
-    r.grievance += 30;
+    r.grievance += 15;
   }
   const lw = w.kingdoms.get(winners[0]), ll = w.kingdoms.get(losers[0]);
   // occupied settlements: winners keep conquests, otherwise they are returned

@@ -1,5 +1,4 @@
 import { clamp, hslToRgb } from '../core/math';
-import { BIOMES } from '../data/biomes';
 import { DEPOSITS } from '../data/resources';
 import { tempOffset } from '../sim/climate';
 import type { World } from '../sim/world';
@@ -147,6 +146,5 @@ export class OverlayRenderer {
         d[o] = r; d[o + 1] = g; d[o + 2] = b; d[o + 3] = a;
       }
     this.ctx.putImageData(this.img, 0, 0);
-    void BIOMES;
   }
 }

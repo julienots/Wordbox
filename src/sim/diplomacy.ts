@@ -63,7 +63,7 @@ function pair(w: World, a: Kingdom, b: Kingdom): void {
   target -= r.grievance * 0.5;
   target += (a.reputation + b.reputation - 100) * 0.1;
   r.opinion = clamp(r.opinion + (target - r.opinion) * 0.08 + w.rng.normal() * 2, -100, 100);
-  r.grievance = Math.max(0, r.grievance - 0.3);
+  r.grievance = Math.max(0, r.grievance - 0.6);
 
   // tribute payment
   if (r.tributeFrom >= 0) {

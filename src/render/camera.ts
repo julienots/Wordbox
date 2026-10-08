@@ -79,9 +79,11 @@ export class Camera {
     this.anim = { x, y, zoom: clamp(zoom, this.minZoom, this.maxZoom), t: 0, dur, fx: this.x, fy: this.y, fz: this.zoom };
     this.vx = this.vy = 0;
   }
+  /** Keep the world filling the screen when possible (no empty void at the edges). */
   clampPos(): void {
-    this.x = clamp(this.x, 0, this.worldW);
-    this.y = clamp(this.y, 0, this.worldH);
+    const hw = this.vw / 2 / this.zoom, hh = this.vh / 2 / this.zoom;
+    this.x = hw * 2 >= this.worldW ? this.worldW / 2 : clamp(this.x, hw, this.worldW - hw);
+    this.y = hh * 2 >= this.worldH ? this.worldH / 2 : clamp(this.y, hh, this.worldH - hh);
   }
 
   update(dt: number): void {
@@ -94,6 +96,7 @@ export class Camera {
       this.y = lerp(a.fy, a.y, e);
       this.zoom = Math.exp(lerp(Math.log(a.fz), Math.log(a.zoom), e));
       if (k >= 1) this.anim = null;
+      this.clampPos();
     } else if (this.follow) {
       const p = this.follow.pos();
       if (!p) this.follow = null;
@@ -101,6 +104,7 @@ export class Camera {
         const k = 1 - Math.exp(-dt * 6);
         this.x += (p.x - this.x) * k;
         this.y += (p.y - this.y) * k;
+        this.clampPos();
       }
     } else if (Math.abs(this.vx) + Math.abs(this.vy) > 0.01) {
       this.x += this.vx * dt;

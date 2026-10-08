@@ -286,7 +286,7 @@ export class WeatherFx {
       const R = c.r * z;
       if (sx + R < 0 || sy + R < 0 || sx - R > cam.vw || sy - R > cam.vh) continue;
       const dark = c.type === 'storm' || c.type === 'hurricane';
-      const alpha = z < 6 ? 0.45 : 0.18;
+      const alpha = z < 6 ? 0.45 : z < 14 ? 0.15 : 0.07;
       for (let k = 0; k < (c.type === 'hurricane' ? 8 : 4); k++) {
         const a = k * 1.7 + (c.type === 'hurricane' ? time * 0.6 : 0);
         const ox = Math.cos(a) * R * 0.45, oy = Math.sin(a) * R * 0.35;

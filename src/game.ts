@@ -1,5 +1,4 @@
 import { AudioEngine } from './audio/audio';
-import { hash2 } from './core/rng';
 import { BASE_TICKS_PER_SECOND, DAYS_PER_YEAR, SPEEDS } from './data/time';
 import { DebugOverlay } from './debug/debug';
 import { Input } from './input/input';
@@ -11,7 +10,6 @@ import { catchUp, offlineYears, OfflineReport } from './save/offline';
 import { decode, deserialize, encode, serialize } from './save/serialize';
 import { createStore, profile, SaveStore, SlotMeta } from './save/storage';
 import { loadSettings, saveSettings, Settings } from './settings';
-import { animalById } from './data/animals';
 import { setupMode } from './sim/modes';
 import { canUse, cooldowns, PowerCtx, PowerDef, usePower } from './sim/powers';
 import { createWorld, QUALITY_CAPS, applyCaps, spawnTribe } from './sim/setup';
@@ -537,13 +535,5 @@ export class Game {
     const meta = { id: opts.id, name: planet, seed: opts.seed, mode: 'infinite', year: 0, pop: colony.totalPop(), kingdoms: colony.livingKingdoms().length, size: 192, savedAt: Date.now(), parent: w.opts.id };
     await this.store.write(meta, await encode(serialize(colony)));
     this.hud.toast(`🪐 Nouvelle planète colonisée : ${planet} (disponible dans « Mondes »).`, 'imp3');
-  }
-
-  hash(): number {
-    return hash2(this.world?.tick ?? 0, 7);
-  }
-
-  speciesName(sp: string): string {
-    return animalById.get(sp)?.name ?? sp;
   }
 }

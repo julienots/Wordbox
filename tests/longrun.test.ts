@@ -22,6 +22,7 @@ describe('TEST 12 — simulation longue', () => {
       let lastEraSum = 0, stagnant = 0;
       for (let y = 0; y < YEARS; y += 25) {
         runTicks(w, 25 * DAYS_PER_YEAR);
+        await new Promise((r) => setTimeout(r, 0)); // keep the test worker responsive
         for (const s of w.settlements.values()) {
           expect(Number.isFinite(s.extraPop) && s.extraPop >= 0).toBe(true);
           for (const r of RES) expect(Number.isFinite(s.stock[r]) && s.stock[r] >= 0, `${r}@${w.year}`).toBe(true);

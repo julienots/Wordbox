@@ -154,12 +154,13 @@ export class TerrainRenderer {
       for (let pxx = 0; pxx < px; pxx++) {
         // jittered sampling gives organic biome borders instead of square tiles
         const fx = cx0 + (pxx + 0.5) / T, fy = cy0 + (py + 0.5) / T;
-        const jx = (hash01(pxx + cx0 * T, py + cy0 * T, 7) - 0.5) * 0.7;
-        const jy = (hash01(pxx + cx0 * T, py + cy0 * T, 8) - 0.5) * 0.7;
+        // smooth wavy offsets (organic borders) + a little grain
+        const jx = 0.28 * Math.sin(fx * 2.1 + fy * 1.3) + 0.14 * Math.sin(fy * 5.3 - fx * 0.7) + (hash01(pxx + cx0 * T, py + cy0 * T, 7) - 0.5) * 0.12;
+        const jy = 0.28 * Math.sin(fy * 1.9 - fx * 1.1) + 0.14 * Math.sin(fx * 4.7 + fy * 0.9) + (hash01(pxx + cx0 * T, py + cy0 * T, 8) - 0.5) * 0.12;
         const sx = clamp(Math.floor(fx + jx), 0, m.w - 1), sy = clamp(Math.floor(fy + jy), 0, m.h - 1);
         const i = sy * m.w + sx;
         terrainColor(m, i, fx, fy, c);
-        const n = 0.94 + hash01(pxx + cx0 * T, py + cy0 * T, 3) * 0.12;
+        const n = 0.96 + hash01(pxx + cx0 * T, py + cy0 * T, 3) * 0.08;
         let r = c[0] * n, g = c[1] * n, b = c[2] * n;
         // foam on coasts
         if (m.isWater(i) && m.biome[i] !== B.RIVER) {

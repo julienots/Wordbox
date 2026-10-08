@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Aeonis</string>
+    <string name="title_activity_main">Aeonis</string>
+    <string name="package_name">com.julienots.aeonis</string>
+    <string name="custom_url_scheme">com.julienots.aeonis</string>
+</resources>

@@ -163,8 +163,8 @@ export class Renderer {
 
     // ---- borders / filters
     this.overlay.update(performance.now(), level === ZoomLevel.STRATEGIC);
-    ctx.imageSmoothingEnabled = z < 2;
-    ctx.globalAlpha = level === ZoomLevel.CLOSE && this.overlay.filter === 'none' ? 0.55 : 1;
+    ctx.imageSmoothingEnabled = z < 2 || z > 5;
+    ctx.globalAlpha = this.overlay.filter !== 'none' ? 0.9 : level === ZoomLevel.CLOSE ? 0.4 : level === ZoomLevel.INTERMEDIATE ? 0.75 : 1;
     ctx.drawImage(this.overlay.canvas, ox, oy, w.map.w * z, w.map.h * z);
     ctx.globalAlpha = 1;
 
