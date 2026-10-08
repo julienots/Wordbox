@@ -53,6 +53,6 @@ describe('TEST 12 — simulation longue', () => {
       const heapEnd = process.memoryUsage().heapUsed;
       expect((heapEnd - heapStart) / 1e6).toBeLessThan(900);
       console.log(`seed ${seed}: year ${w.year}, pop ${w.totalPop()}, kingdoms ${w.livingKingdoms().length}, wars ${w.wars.size}, heap +${((heapEnd - heapStart) / 1e6).toFixed(0)}MB`);
-    });
+    }, LONG ? 3_600_000 : 900_000);
   }
 });
